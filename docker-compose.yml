@@ -1,0 +1,35 @@
+# version: '3.8'
+
+# services:
+#   django:
+#     container_name: django
+#     build:
+#       context: ../django-celery #project folder name
+#       dockerfile: Dockerfile
+#     command: python manage.py runserver 0.0.0.0:8000
+#     volumes: # store data into the container which mounts local directory into the docker container
+#       - ../django-celery:/usr/src/app/ 
+#     ports:
+#       - 8001:8000
+#     environment:
+#       - DEBUG=1
+#       - SECRRET_KEY=87sdfga8sdfasdfa8sdf8988sadf
+#       - ALLOWED_HOSTS= localhost,127.0.0.1
+
+version: '3.8'
+
+services:
+  django:
+    container_name: django
+    build:
+      context: . # Use the current directory as the build context
+      dockerfile: Dockerfile # Explicitly specify the Dockerfile (optional if named Dockerfile)
+    command: python manage.py runserver 0.0.0.0:8000
+    volumes: 
+      - .:/usr/src/app/ 
+    ports:
+      - 8001:8000
+    environment:
+      - DEBUG=1
+      - SECRET_KEY=87sdfga8sdfasdfa8sdf8988sadf
+      - ALLOWED_HOSTS=localhost,127.0.0.1
