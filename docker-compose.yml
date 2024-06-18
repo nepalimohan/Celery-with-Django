@@ -43,9 +43,8 @@ services:
     container_name: celery
     build:
       context: . # Use the current directory as the build context
-      dockerfile: Dockerfile # Explicitly specify the Dockerfile (optional if named Dockerfile)
     volumes: 
-      - .:/usr/src/app/ 
+      - .:/usr/src/app/ #stores data outside the container
     environment:
       - DEBUG=1
       - SECRET_KEY=87sdfga8sdfasdfa8sdf8988sadf
