@@ -19,6 +19,9 @@
 version: '3.8'
 
 services:
+  redis:
+    image: redis:7.0.11-alpine
+
   django:
     container_name: django
     build:
@@ -33,3 +36,19 @@ services:
       - DEBUG=1
       - SECRET_KEY=87sdfga8sdfasdfa8sdf8988sadf
       - ALLOWED_HOSTS=localhost,127.0.0.1
+    depends_on: #after running redis, django will be running
+      - redis
+
+  celery:
+    container_name: celery
+    build:
+      context: . # Use the current directory as the build context
+      dockerfile: Dockerfile # Explicitly specify the Dockerfile (optional if named Dockerfile)
+    volumes: 
+      - .:/usr/src/app/ 
+    environment:
+      - DEBUG=1
+      - SECRET_KEY=87sdfga8sdfasdfa8sdf8988sadf
+      - ALLOWED_HOSTS=localhost,127.0.0.1
+    depends_on: #after running redis, django will be running
+      - redis
