@@ -43,6 +43,7 @@ services:
     container_name: celery
     build:
       context: . # Use the current directory as the build context
+    command: celery --app=core worker -l INFO #app name core where celery.py is located
     volumes: 
       - .:/usr/src/app/ #stores data outside the container
     environment:
@@ -51,3 +52,32 @@ services:
       - ALLOWED_HOSTS=localhost,127.0.0.1
     depends_on: #after running redis, django will be running
       - redis
+      - django
+  
+  celery2:
+    container_name: celery2
+    build:
+      context: . # Use the current directory as the build context
+      dockerfile: Dockerfile
+    command: celery -A celerytask worker -l INFO #app name core where celery.py is located
+    volumes: 
+      - ./celeryworker:/usr/src/app/ #stores data outside the container
+    depends_on: #after running redis, django will be running
+      - redis
+      - django
+
+  # celeryworker:
+  #   container_name: celeryworker
+  #   build:
+  #     context: ./celeryworker
+  #     dockerfile: Dockerfile
+  #   command: celery -A celeryworker worker -l INFO
+  #   volumes: 
+  #     - ./celeryworker:/usr/src/app
+  #   environment:
+  #     - DEBUG=1
+  #     - SECRET_KEY=your-secret-key
+  #     - ALLOWED_HOSTS=localhost,127.0.0.1
+  #   depends_on:
+  #     - redis
+  #     - django
