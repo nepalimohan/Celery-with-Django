@@ -6,3 +6,9 @@ When working with celery, do not forget to specify/initialize initialize
 it in __init__.py file, else it will give you connection error
 
 https://www.youtube.com/watch?v=xTGbfrdiv4U&list=PLOLrQ9Pn6cayGytG1fgUPEsUp3Onol8V7&index=8
+
+
+# task prompt
+Hello buddy. I have just completed baiscs of elastic search and celery setup and task queue. can you assign me a real world implemented task using both in django
+
+16th celery vdo
