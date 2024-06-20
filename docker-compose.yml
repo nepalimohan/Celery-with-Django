@@ -43,7 +43,7 @@ services:
     container_name: celery
     build:
       context: .
-    command: celery --app=core worker -l INFO  # Assuming 'core' is where celery.py is located
+    command: celery --app=core worker -l INFO -Q queue1  # Assuming 'core' is where celery.py is located
     volumes:
       - .:/usr/src/app
     environment:
@@ -59,6 +59,8 @@ services:
     build:
       context: ./celeryworker
       dockerfile: Dockerfile
+    command: celery -A celeryconfig worker -l INFO -Q queue2 
+    #celeryconfig is the file name inside celeryworker directory
     volumes:
       - ./celeryworker:/usr/src/app
     depends_on:

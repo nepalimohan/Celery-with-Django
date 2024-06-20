@@ -14,7 +14,7 @@ RUN pip install --no-cache-dir -r requirements.txt
 COPY . .
 
 # Specify the command to run Celery worker
-CMD ["celery", "-A", "celeryconfig", "worker", "-l", "INFO"]
+# CMD ["celery", "-A", "celeryconfig", "worker", "-l", "INFO", "-Q", "queue2"]
 
 
 #celeryconfig is the filename inside celeryworker

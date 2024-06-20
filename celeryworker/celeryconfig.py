@@ -13,6 +13,6 @@ app = Celery('celeryworker')
 
 # Load configuration from Django settings
 app.config_from_object('settings', namespace='CELERY')
-
+app.conf.imports = ('celery_app.tasks') #this discovers the tasks registered in celery_app folder
 # Automatically discover tasks in all Django apps
 app.autodiscover_tasks()
