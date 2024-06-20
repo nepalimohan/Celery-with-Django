@@ -25,59 +25,42 @@ services:
   django:
     container_name: django
     build:
-      context: . # Use the current directory as the build context
-      dockerfile: Dockerfile # Explicitly specify the Dockerfile (optional if named Dockerfile)
+      context: .
+      dockerfile: Dockerfile
     command: python manage.py runserver 0.0.0.0:8000
-    volumes: 
-      - .:/usr/src/app/ 
+    volumes:
+      - .:/usr/src/app
     ports:
       - 8001:8000
     environment:
       - DEBUG=1
       - SECRET_KEY=87sdfga8sdfasdfa8sdf8988sadf
       - ALLOWED_HOSTS=localhost,127.0.0.1
-    depends_on: #after running redis, django will be running
+    depends_on:
       - redis
 
   celery:
     container_name: celery
     build:
-      context: . # Use the current directory as the build context
-    command: celery --app=core worker -l INFO #app name core where celery.py is located
-    volumes: 
-      - .:/usr/src/app/ #stores data outside the container
+      context: .
+    command: celery --app=core worker -l INFO  # Assuming 'core' is where celery.py is located
+    volumes:
+      - .:/usr/src/app
     environment:
       - DEBUG=1
       - SECRET_KEY=87sdfga8sdfasdfa8sdf8988sadf
       - ALLOWED_HOSTS=localhost,127.0.0.1
-    depends_on: #after running redis, django will be running
-      - redis
-      - django
-  
-  celery2:
-    container_name: celery2
-    build:
-      context: . # Use the current directory as the build context
-      dockerfile: Dockerfile
-    command: celery -A celerytask worker -l INFO #app name core where celery.py is located
-    volumes: 
-      - ./celeryworker:/usr/src/app/ #stores data outside the container
-    depends_on: #after running redis, django will be running
+    depends_on:
       - redis
       - django
 
-  # celeryworker:
-  #   container_name: celeryworker
-  #   build:
-  #     context: ./celeryworker
-  #     dockerfile: Dockerfile
-  #   command: celery -A celeryworker worker -l INFO
-  #   volumes: 
-  #     - ./celeryworker:/usr/src/app
-  #   environment:
-  #     - DEBUG=1
-  #     - SECRET_KEY=your-secret-key
-  #     - ALLOWED_HOSTS=localhost,127.0.0.1
-  #   depends_on:
-  #     - redis
-  #     - django
+  celeryworker:
+    container_name: celeryworker
+    build:
+      context: ./celeryworker
+      dockerfile: Dockerfile
+    volumes:
+      - ./celeryworker:/usr/src/app
+    depends_on:
+      - redis
+      - django
