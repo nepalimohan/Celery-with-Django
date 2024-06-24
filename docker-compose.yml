@@ -43,7 +43,23 @@ services:
     container_name: celery
     build:
       context: .
-    command: celery --app=core worker -l INFO -Q queue1  # Assuming 'core' is where celery.py is located
+    command: celery --app=core worker -l INFO -Q celery,celery:1,celery:2,celery3  # Assuming 'core' is where celery.py is located
+    # command: celery --app=core worker -l INFO -Q queue1  # Assuming 'core' is where celery.py is located
+    volumes:
+      - .:/usr/src/app
+    environment:
+      - DEBUG=1
+      - SECRET_KEY=87sdfga8sdfasdfa8sdf8988sadf
+      - ALLOWED_HOSTS=localhost,127.0.0.1
+    depends_on:
+      - redis
+      - django
+  
+  celery-beat:
+    container_name: celery-beat
+    build:
+      context: .
+    command: celery --app=core beat -l INFO --scheduler django_celery_beat.schedulers:DatabaseScheduler
     volumes:
       - .:/usr/src/app
     environment:
@@ -54,15 +70,15 @@ services:
       - redis
       - django
 
-  celeryworker:
-    container_name: celeryworker
-    build:
-      context: ./celeryworker
-      dockerfile: Dockerfile
-    command: celery -A celeryconfig worker -l INFO -Q queue2 
-    #celeryconfig is the file name inside celeryworker directory
-    volumes:
-      - ./celeryworker:/usr/src/app
-    depends_on:
-      - redis
-      - django
+  # celeryworker:
+  #   container_name: celeryworker
+  #   build:
+  #     context: ./celeryworker
+  #     dockerfile: Dockerfile
+  #   command: celery -A celeryconfig worker -l INFO -Q queue2 
+  #   #celeryconfig is the file name inside celeryworker directory
+  #   volumes:
+  #     - ./celeryworker:/usr/src/app
+  #   depends_on:
+  #     - redis
+  #     - django

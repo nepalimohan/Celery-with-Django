@@ -14,3 +14,11 @@ we just create a file system identical in celeryworker
 
 
 if you look at celery.py, the tasks are queued and the queue tasks are segregated to celery in django and celeryworker
+
+
+tp1. delay ( )
+from
+celery import group
+from newapp. tasks import tpl, tp2, tp3, tp4, tps, taskl
+task_group = group(tpl.s(), tp2.s(), tp3.s(), tp4.s())
+task_group-apply_async()
