@@ -23,8 +23,8 @@ app.conf.beat_schedule = {
         'task': 'celery_app.tasks.send_email_task',  # Replace with correct path to your task
         # 'schedule': 60.0,  # Schedule the task to run every minute
         'schedule': crontab(minute='*/1'),  # Schedule the task to run every minute
-        'args': ('PROJECT ALERT!!!!!!', 'This mail is scheduled every minute to remind you of your responsibilities.', 'nepali.mohan11@gmail.com', ['nepalimohan.spices@gmail.com','sacharavya@gmail.com', 'upretiprabesh35@gmail.com', 'bsomeman326@gmail.com', 'dixanta.shrestha@study.lbef.edu.np']),
-        # 'args': ('PROJECT ALERT!!!!!!', 'This mail is scheduled every minute to remind you of your responsibilities.', 'nepali.mohan11@gmail.com', ['sacharavya@gmail.com', 'upretiprabesh35@gmail.com', 'bsomeman326@gmail.com']),
+        # 'args': ('PROJECT ALERT!!!!!!', 'This mail is scheduled every minute to remind you of your responsibilities.', 'nepali.mohan11@gmail.com', ['nepalimohan.spices@gmail.com','sacharavya@gmail.com', 'upretiprabesh35@gmail.com', 'bsomeman326@gmail.com', 'dixanta.shrestha@study.lbef.edu.np']),
+        'args': ('PROJECT ALERT!!!!!!', 'Kaisa laga mera majak', 'nepali.mohan11@gmail.com', ['nepalimohan.spices@gmail.com', '']),
         # 'args': ('Scheduled Email', 'This is a scheduled email.', 'nepali.mohan11@gmail.com', ['sacharavya@gmail.com', 'upretiprabesh35@gmail.com', 'bsomeman326@gmail.com']),
     },
 }
